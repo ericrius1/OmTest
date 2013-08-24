@@ -31,7 +31,7 @@ OM.Galaxy = new function() {
         var context = canvas.getContext('2d');
         context.drawImage(sprite, 0, 0);
 
-        var object = new THREE.CSS3DSprite(canvas);
+        var object = new THREE.CSS3DObject(canvas);
         object.position.x = Math.random() * 4000 - 2000,
         object.position.y = Math.random() * 4000 - 2000,
         object.position.z = Math.random() * 4000 - 2000
