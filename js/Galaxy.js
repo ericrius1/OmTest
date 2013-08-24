@@ -44,7 +44,7 @@ OM.Galaxy = new function() {
       transition();
 
     }, false);
-    sprite.src = 'assets/jordi.png';
+    sprite.src = 'assets/flower.jpg';
 
    
 
