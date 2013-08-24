@@ -126,13 +126,23 @@ OM.Galaxy = new function() {
     function loadInstagramPhotos(){
       console.log('load');
       for(var i = 0; i < OM.photos.length; i++){
+        //delete old object
+        var object = objects[i];
+        scene.remove(object);
+        objects.splice(i);
+
+        //add new one
         var canvas = document.createElement('canvas');
         canvas.width = instaSprites[i].width;
         canvas.height = instaSprites[i].height;
         var context = canvas.getContext('2d');
         context.drawImage(instaSprites[i], 0, 0);
-        var object = objects[i];
-        scene.remove(object);
+        object = new THREE.CSS3DSprite(canvas);
+        object.position.x = Math.random() * 4000 - 2000,
+        object.position.y = Math.random() * 4000 - 2000,
+        object.position.z = Math.random() * 4000 - 2000
+        //scene.add(object);
+        objects.unshift(object);
         
       }
     }
