@@ -4,14 +4,14 @@ OM.Galaxy = new function() {
   var camera, scene, renderer;
   var controls;
 
-  var particlesTotal = 10;
   var sprites = []
   var positions = [];
   var objects = [];
   var current = 0;
   var pulsingPower = 0.02
   var pulsingSpeed = 0.002
-  var radius = 750;
+  var maxNodes =64;
+  var radius = 750
 
   this.init = function() {
     OM.emptyWorld = false;
@@ -42,14 +42,13 @@ OM.Galaxy = new function() {
 
   this.addPhotos = function() {
     //TEMP
-    OM.photos.push('assets/flower.jpg');
-    var sprite = document.createElement('img');
-    sprite.src = OM.photos[OM.photos.length-1];
-    sprite.addEventListener('load', function(event) {
-      loadSprite(sprite);
-      addNodeToSphere();
-      transitionOne(objects[objects.length-1]);
-    }, false);
+    // OM.photos.push('assets/flower.jpg');
+    // var sprite = document.createElement('img');
+    // sprite.src = OM.photos[OM.photos.length-1];
+    // sprite.addEventListener('load', function(event) {
+    //   loadOneSprite(sprite);
+    //   transitionOne(objects[objects.length-1]);
+    // }, false);
     
 
 
@@ -65,14 +64,14 @@ OM.Galaxy = new function() {
   }
 
   function transitionAll() {
-    for (var i = 0, j = 0; i < particlesTotal; i++, j += 3) {
+    for (var i = 0, j = 0; i < maxNodes; i++, j += 3) {
       transitionOne(objects[i], j);
     }
   }
 
   function transitionOne(object, offset) {
     var offset = offset || (objects.length-1) * 3;
-    console.log(offset)
+    console.log("offset", offset)
     var duration = 2000;
     new TWEEN.Tween(object.position)
       .to({
@@ -97,23 +96,28 @@ OM.Galaxy = new function() {
   }
 
   function loadSprites() {
-    for (var i = 0; i < OM.photos.length; i++) {
+    for (var i = 0; i < maxNodes; i++) {
       var sprite = document.createElement('img');
-      sprite.src = OM.photos[i];
+      if(i < OM.photos.length){
+        sprite.src = OM.photos[i];
+      }
+      else{
+        sprite.src = 'assets/flower.jpg'
+      }
       sprites.push(sprite);
     }
 
     sprites[sprites.length - 1].addEventListener('load', function() {
 
-      for (var i = 0; i < OM.photos.length; i++) {
-        loadSprite(sprites[i]);
+      for (var i = 0; i < maxNodes; i++) {
+        loadOneSprite(sprites[i]);
       }
 
       transitionAll();
     }, false);
   }
 
-  function loadSprite(sprite) {
+  function loadOneSprite(sprite) {
     var canvas = document.createElement('canvas');
     canvas.width = sprite.width;
     canvas.height = sprite.height;
@@ -131,15 +135,14 @@ OM.Galaxy = new function() {
   }
 
   function createSphere() {
-    for (var i = 0; i < OM.photos.length; i++) {
+    for (var i = 0; i < maxNodes; i++) {
       addNodeToSphere(i);
     }
   }
 
   function addNodeToSphere(index) {
-    var index = index || OM.photos.length - 1;
-    var phi = Math.acos(-1 + (2 * index) / OM.photos.length);
-    var theta = Math.sqrt(OM.photos.length * Math.PI) * phi;
+    var phi = Math.acos(-1 + (2 * index) / maxNodes);
+    var theta = Math.sqrt(maxNodes * Math.PI) * phi;
 
     positions.push(
       radius * Math.cos(theta) * Math.sin(phi),
