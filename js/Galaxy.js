@@ -4,7 +4,7 @@ OM.Galaxy = new function() {
   var camera, scene, renderer;
   var controls;
 
-  var particlesTotal = 111;
+  var particlesTotal = 5;
   var positions = [];
   var objects = [];
   var current = 0;
