@@ -12,7 +12,7 @@ OM.Galaxy = new function() {
   var pulsingSpeed = 0.002
 
   this.init = function() {
-
+    OM.emptyWorld = false;
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
     camera.position.set(600, 400, 1500);
     camera.lookAt(new THREE.Vector3());
@@ -88,6 +88,10 @@ OM.Galaxy = new function() {
 
   }
 
+  this.addPhotos = function(){
+    console.log('load more!')
+  }
+
   function onWindowResize() {
 
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -131,15 +135,15 @@ OM.Galaxy = new function() {
     TWEEN.update();
     controls.update();
 
-    var time = performance.now();
+    // var time = performance.now();
 
-    for (var i = 0, l = objects.length; i < l; i++) {
+    // for (var i = 0, l = objects.length; i < l; i++) {
 
-      var object = objects[i];
-      var scale = Math.sin((Math.floor(object.position.x) + time) * pulsingSpeed) * pulsingPower + 1;
-      object.scale.set(scale, scale, scale);
+    //   var object = objects[i];
+    //   var scale = Math.sin((Math.floor(object.position.x) + time) * pulsingSpeed) * pulsingPower + 1;
+    //   object.scale.set(scale, scale, scale);
 
-    }
+    // }
 
     renderer.render(scene, camera);
   }
