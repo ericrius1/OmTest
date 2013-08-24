@@ -4,7 +4,8 @@ OM.photos = [];
 $(function() {
   $('.instagram').on('didLoadInstagram', function(event, response) {
     response.data.map(function(photo) {
-       OM.photos.push(photo.images.standard_resolution.url); 
+      debugger;
+       OM.photos.push(photo.images.low_resolution.url); 
     });
       OM.Galaxy.init();
   });

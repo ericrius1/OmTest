@@ -44,7 +44,7 @@ OM.Galaxy = new function() {
       transition();
 
     }, false);
-    sprite.src = OM.photos[0];
+    sprite.src = OM.photos[OM.photos.length-1];
 
    
 
