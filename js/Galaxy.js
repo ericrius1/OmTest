@@ -4,7 +4,7 @@ OM.Galaxy = new function() {
   var camera, scene, renderer;
   var controls;
 
-  var particlesTotal = 111;
+  var particlesTotal = 10;
   var positions = [];
   var objects = [];
   var current = 0;
@@ -31,7 +31,7 @@ OM.Galaxy = new function() {
         var context = canvas.getContext('2d');
         context.drawImage(sprite, 0, 0);
 
-        var object = new THREE.CSS3DSprite(canvas);
+        var object = new THREE.CSS3DObject(canvas);
         object.position.x = Math.random() * 4000 - 2000,
         object.position.y = Math.random() * 4000 - 2000,
         object.position.z = Math.random() * 4000 - 2000
@@ -45,6 +45,7 @@ OM.Galaxy = new function() {
 
     }, false);
     sprite.src = OM.photos[OM.photos.length-1];
+
 
    
 
