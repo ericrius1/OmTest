@@ -1,7 +1,7 @@
 var OM = OM || {}
 
 OM.photos = [];
-OM.requestIntervalTime = 100000; //in milliseconds
+OM.requestIntervalTime = 1000; //in milliseconds
 OM.emptyWorld = true;
 $(function() {
   $('.instagram').on('didLoadInstagram', function(event, response) {
@@ -26,8 +26,10 @@ $(function() {
 
   var queryInstagramTest = function() {
     console.log("slower")
-    OM.Galaxy.addPhotos();
+    //OM.Galaxy.addPhotos();
   }
+
+
 
   queryInstagram();
   window.setInterval(queryInstagramTest, OM.requestIntervalTime);

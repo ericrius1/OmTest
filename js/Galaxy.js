@@ -4,35 +4,84 @@ OM.Galaxy = new function() {
   var camera, scene, renderer;
   var controls;
 
-  var sprites = []
+  var maxNodes = 111;
+  var radius = maxNodes * 15;
+  var sprites = [];
+  var instaSprites = [];
   var positions = [];
   var objects = [];
   var current = 0;
   var pulsingPower = 0.02
   var pulsingSpeed = 0.002
-  var maxNodes =64;
-  var radius = 750
 
   this.init = function() {
-    OM.emptyWorld = false;
+
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    camera.position.set(600, 400, 1500);
+    camera.position.set(-135, 340, -2720);
     camera.lookAt(new THREE.Vector3());
 
     scene = new THREE.Scene();
 
-    loadSprites();
+    var flowerSprite = document.createElement('img');
+    flowerSprite.src = 'assets/flower.jpg';
+    for (var i = 0; i < OM.photos.length; i++) {
+      var sprite = document.createElement('img');
+      sprite.src = OM.photos[i];
+      instaSprites.push(sprite);
+    }
+    flowerSprite.addEventListener('load', function(event) {
+      for (var i = 0; i < maxNodes; i++) {
+        sprites.push(flowerSprite);
+        var canvas = document.createElement('canvas');
+        console.log(sprite);
+        canvas.width = flowerSprite.width;
+        canvas.height = flowerSprite.height;
+        var context = canvas.getContext('2d');
+        context.drawImage(flowerSprite, 0, 0);
+        var object = new THREE.CSS3DSprite(canvas);
+        object.position.x = Math.random() * 4000 - 2000,
+        object.position.y = Math.random() * 4000 - 2000,
+        object.position.z = Math.random() * 4000 - 2000
+        scene.add(object);
 
-    createSphere();
+        objects.push(object);
+      }
 
+      transition();
+
+
+    }, false);
+
+
+
+    // Sphere
+
+    for (var i = 0; i < maxNodes; i++) {
+
+      var phi = Math.acos(-1 + (2 * i) / maxNodes);
+      var theta = Math.sqrt(maxNodes * Math.PI) * phi;
+
+      positions.push(
+        radius * Math.cos(theta) * Math.sin(phi),
+        radius * Math.sin(theta) * Math.sin(phi),
+        radius * Math.cos(phi)
+      );
+
+    }
+
+    //
 
     renderer = new THREE.CSS3DRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.style.position = 'absolute';
     document.getElementById('container').appendChild(renderer.domElement);
 
+    //
+
     controls = new THREE.TrackballControls(camera, renderer.domElement);
     controls.rotateSpeed = 0.1;
+
+    //
 
     window.addEventListener('resize', onWindowResize, false);
 
@@ -40,117 +89,69 @@ OM.Galaxy = new function() {
 
   }
 
+    function onWindowResize() {
+
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+    }
+
+    function transition() {
+      var offset = current * maxNodes * 3;
+      var duration = 2000;
+
+      for (var i = 0, j = offset; i < maxNodes; i++, j += 3) {
+
+        var object = objects[i];
+
+        new TWEEN.Tween(object.position)
+          .to({
+            x: positions[j],
+            y: positions[j + 1],
+            z: positions[j + 2]
+          }, Math.random() * duration + duration)
+          .easing(TWEEN.Easing.Exponential.InOut)
+          .start();
+
+      }
+
+      new TWEEN.Tween(this)
+        .to({}, duration * 3)
+        .onComplete(loadInstagramPhotos)
+        .start();
+    }
+
+    function loadInstagramPhotos(){
+      console.log('load');
+      for(var i = 0; i < OM.photos.length; i++){
+        var canvas = document.createElement('canvas');
+        canvas.width = instaSprites[i].width;
+        canvas.height = instaSprites[i].height;
+        var context = canvas.getContext('2d');
+        context.drawImage(instaSprites[i], 0, 0);
+        var object = objects[i];
+        scene.remove(object);
+        
+      }
+    }
+
+
+    function animate() {
+
+      requestAnimationFrame(animate);
+
+      TWEEN.update();
+      controls.update();
+
+      renderer.render(scene, camera);
+    }
+
   this.addPhotos = function() {
-    //TEMP
-    // OM.photos.push('assets/flower.jpg');
-    // var sprite = document.createElement('img');
-    // sprite.src = OM.photos[OM.photos.length-1];
-    // sprite.addEventListener('load', function(event) {
-    //   loadOneSprite(sprite);
-    //   transitionOne(objects[objects.length-1]);
-    // }, false);
-    
-
+    OM.photos.push(OM.photos[0]);
+    sprites
 
   }
-
-  function onWindowResize() {
-
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-  }
-
-  function transitionAll() {
-    for (var i = 0, j = 0; i < maxNodes; i++, j += 3) {
-      transitionOne(objects[i], j);
-    }
-  }
-
-  function transitionOne(object, offset) {
-    var offset = offset || (objects.length-1) * 3;
-    console.log("offset", offset)
-    var duration = 2000;
-    new TWEEN.Tween(object.position)
-      .to({
-        x: positions[offset],
-        y: positions[offset + 1],
-        z: positions[offset + 2]
-      }, Math.random() * duration + duration)
-      .easing(TWEEN.Easing.Exponential.InOut)
-      .start();
-
-  }
-
-  function animate() {
-
-    requestAnimationFrame(animate);
-
-    TWEEN.update();
-    controls.update();
-
-
-    renderer.render(scene, camera);
-  }
-
-  function loadSprites() {
-    for (var i = 0; i < maxNodes; i++) {
-      var sprite = document.createElement('img');
-      if(i < OM.photos.length){
-        sprite.src = OM.photos[i];
-      }
-      else{
-        sprite.src = 'assets/flower.jpg'
-      }
-      sprites.push(sprite);
-    }
-
-    sprites[sprites.length - 1].addEventListener('load', function() {
-
-      for (var i = 0; i < maxNodes; i++) {
-        loadOneSprite(sprites[i]);
-      }
-
-      transitionAll();
-    }, false);
-  }
-
-  function loadOneSprite(sprite) {
-    var canvas = document.createElement('canvas');
-    canvas.width = sprite.width;
-    canvas.height = sprite.height;
-
-    var context = canvas.getContext('2d');
-    context.drawImage(sprite, 0, 0);
-
-    var object = new THREE.CSS3DSprite(canvas);
-    object.position.x = Math.random() * 4000 - 2000,
-    object.position.y = Math.random() * 4000 - 2000,
-    object.position.z = Math.random() * 4000 - 2000
-    scene.add(object);
-
-    objects.push(object);
-  }
-
-  function createSphere() {
-    for (var i = 0; i < maxNodes; i++) {
-      addNodeToSphere(i);
-    }
-  }
-
-  function addNodeToSphere(index) {
-    var phi = Math.acos(-1 + (2 * index) / maxNodes);
-    var theta = Math.sqrt(maxNodes * Math.PI) * phi;
-
-    positions.push(
-      radius * Math.cos(theta) * Math.sin(phi),
-      radius * Math.sin(theta) * Math.sin(phi),
-      radius * Math.cos(phi)
-    );
-  }
-
-
 
 }
