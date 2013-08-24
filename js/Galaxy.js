@@ -5,6 +5,7 @@ OM.Galaxy = new function() {
   var controls;
 
   var particlesTotal = 10;
+  var sprites = []
   var positions = [];
   var objects = [];
   var current = 0;
@@ -19,36 +20,7 @@ OM.Galaxy = new function() {
 
     scene = new THREE.Scene();
 
-    var sprite = document.createElement('img');
-    sprite.addEventListener('load', function(event) {
-
-      for (var i = 0, j = 0; i < particlesTotal; i++, j += 3) {
-
-        var canvas = document.createElement('canvas');
-        canvas.width = sprite.width;
-        canvas.height = sprite.height;
-
-        var context = canvas.getContext('2d');
-        context.drawImage(sprite, 0, 0);
-
-        var object = new THREE.CSS3DSprite(canvas);
-        object.position.x = Math.random() * 4000 - 2000,
-        object.position.y = Math.random() * 4000 - 2000,
-        object.position.z = Math.random() * 4000 - 2000
-        scene.add(object);
-
-        objects.push(object);
-
-      }
-
-      transition();
-
-    }, false);
-    sprite.src = OM.photos[OM.photos.length-1];
-
-
-   
-
+    loadSprites();
 
 
     // Sphere
@@ -57,7 +29,7 @@ OM.Galaxy = new function() {
 
     for (var i = 0; i < particlesTotal; i++) {
 
-      var phi = Math.acos(-1 + (2 * i) / particlesTotal) ;
+      var phi = Math.acos(-1 + (2 * i) / particlesTotal);
       var theta = Math.sqrt(particlesTotal * Math.PI) * phi;
 
       positions.push(
@@ -88,7 +60,7 @@ OM.Galaxy = new function() {
 
   }
 
-  this.addPhotos = function(){
+  this.addPhotos = function() {
     console.log('load more!')
   }
 
@@ -135,17 +107,38 @@ OM.Galaxy = new function() {
     TWEEN.update();
     controls.update();
 
-    // var time = performance.now();
-
-    // for (var i = 0, l = objects.length; i < l; i++) {
-
-    //   var object = objects[i];
-    //   var scale = Math.sin((Math.floor(object.position.x) + time) * pulsingSpeed) * pulsingPower + 1;
-    //   object.scale.set(scale, scale, scale);
-
-    // }
 
     renderer.render(scene, camera);
   }
+
+  function loadSprites() {
+    for (var i = 0; i < OM.photos.length; i++) {
+      var sprite = document.createElement('img');
+      sprite.src = OM.photos[i];
+      sprites.push(sprite);
+    }
+
+    sprites[sprites.length - 1].addEventListener('load', function() {
+
+      for (var i = 0; i < OM.photos.length; i++) {
+        var canvas = document.createElement('canvas');
+        canvas.width = sprites[i].width;
+        canvas.height = sprites[i].height;
+
+        var context = canvas.getContext('2d');
+        context.drawImage(sprites[i], 0, 0);
+
+        var object = new THREE.CSS3DSprite(canvas);
+        object.position.x = Math.random() * 4000 - 2000,
+        object.position.y = Math.random() * 4000 - 2000,
+        object.position.z = Math.random() * 4000 - 2000
+        scene.add(object);
+
+        objects.push(object);
+      }
+    }, false);
+  }
+
+
 
 }
