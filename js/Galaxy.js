@@ -40,19 +40,13 @@ OM.Galaxy = new function() {
 
     }
 
-    //
-
     renderer = new THREE.CSS3DRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.style.position = 'absolute';
     document.getElementById('container').appendChild(renderer.domElement);
 
-    //
-
     controls = new THREE.TrackballControls(camera, renderer.domElement);
     controls.rotateSpeed = 0.1;
-
-    //
 
     window.addEventListener('resize', onWindowResize, false);
 
@@ -65,7 +59,8 @@ OM.Galaxy = new function() {
     sprite.src = 'assets/flower.jpg';
     sprite.addEventListener('load', function(event){
       loadSprite(sprite);
-    }, false)
+    }, false);
+    transitionAll();
 
 
   }
@@ -79,11 +74,10 @@ OM.Galaxy = new function() {
 
   }
 
-  function transition() {
-    var offset = current * particlesTotal * 3;
+  function transitionAll() {
     var duration = 2000;
 
-    for (var i = 0, j = offset; i < particlesTotal; i++, j += 3) {
+    for (var i = 0, j = 0; i < particlesTotal; i++, j += 3) {
 
       var object = objects[i];
 
@@ -100,10 +94,7 @@ OM.Galaxy = new function() {
 
     new TWEEN.Tween(this)
       .to({}, duration * 3)
-      .onComplete(transition)
       .start();
-
-
   }
 
   function animate() {
@@ -130,7 +121,7 @@ OM.Galaxy = new function() {
         loadSprite(sprites[i]);
       }
 
-      transition();
+      transitionAll();
     }, false);
   }
 
