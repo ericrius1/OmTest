@@ -47,7 +47,7 @@ OM.Galaxy = new function() {
         objects.push(object);
       }
 
-      transition();
+      initalAnimation();
 
 
     }, false);
@@ -98,9 +98,9 @@ OM.Galaxy = new function() {
 
     }
 
-    function transition() {
+    function initalAnimation() {
       var offset = current * maxNodes * 3;
-      var duration = 2000;
+      var duration = 500;
 
       for (var i = 0, j = offset; i < maxNodes; i++, j += 3) {
 
@@ -123,13 +123,17 @@ OM.Galaxy = new function() {
         .start();
     }
 
+    function enterPhotoTween(position){
+
+    }
+
     function loadInstagramPhotos(){
       console.log('load');
       for(var i = 0; i < OM.photos.length; i++){
         //delete old object
-        var object = objects[i];
-        scene.remove(object);
-        objects.splice(i);
+        var oldObject = objects[i];
+        scene.remove(oldObject);
+
 
         //add new one
         var canvas = document.createElement('canvas');
@@ -138,11 +142,11 @@ OM.Galaxy = new function() {
         var context = canvas.getContext('2d');
         context.drawImage(instaSprites[i], 0, 0);
         object = new THREE.CSS3DSprite(canvas);
-        object.position.x = Math.random() * 4000 - 2000,
-        object.position.y = Math.random() * 4000 - 2000,
-        object.position.z = Math.random() * 4000 - 2000
-        //scene.add(object);
+        debugger;
+        object.position = oldObject.position;
+        scene.add(object);
         objects.unshift(object);
+        objects.splice(i, 1);
         
       }
     }
