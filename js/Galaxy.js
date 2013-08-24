@@ -11,6 +11,7 @@ OM.Galaxy = new function() {
   var current = 0;
   var pulsingPower = 0.02
   var pulsingSpeed = 0.002
+  var radius = 750;
 
   this.init = function() {
     OM.emptyWorld = false;
@@ -22,23 +23,8 @@ OM.Galaxy = new function() {
 
     loadSprites();
 
+    createSphere();
 
-    // Sphere
-
-    var radius = 750;
-
-    for (var i = 0; i < particlesTotal; i++) {
-
-      var phi = Math.acos(-1 + (2 * i) / particlesTotal);
-      var theta = Math.sqrt(particlesTotal * Math.PI) * phi;
-
-      positions.push(
-        radius * Math.cos(theta) * Math.sin(phi),
-        radius * Math.sin(theta) * Math.sin(phi),
-        radius * Math.cos(phi)
-      );
-
-    }
 
     renderer = new THREE.CSS3DRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -57,7 +43,7 @@ OM.Galaxy = new function() {
   this.addPhotos = function() {
     var sprite = document.createElement('img');
     sprite.src = 'assets/flower.jpg';
-    sprite.addEventListener('load', function(event){
+    sprite.addEventListener('load', function(event) {
       loadSprite(sprite);
     }, false);
     transitionAll();
@@ -75,26 +61,23 @@ OM.Galaxy = new function() {
   }
 
   function transitionAll() {
-    var duration = 2000;
-
     for (var i = 0, j = 0; i < particlesTotal; i++, j += 3) {
-
-      var object = objects[i];
-
-      new TWEEN.Tween(object.position)
-        .to({
-          x: positions[j],
-          y: positions[j + 1],
-          z: positions[j + 2]
-        }, Math.random() * duration + duration)
-        .easing(TWEEN.Easing.Exponential.InOut)
-        .start();
-
+      transitionOne(objects[i], j);
     }
+  }
 
-    new TWEEN.Tween(this)
-      .to({}, duration * 3)
+  function transitionOne(object, offset) {
+    var offset = offset || 0;
+    var duration = 2000;
+    new TWEEN.Tween(object.position)
+      .to({
+        x: positions[offset],
+        y: positions[offset + 1],
+        z: positions[offset + 2]
+      }, Math.random() * duration + duration)
+      .easing(TWEEN.Easing.Exponential.InOut)
       .start();
+
   }
 
   function animate() {
@@ -125,7 +108,7 @@ OM.Galaxy = new function() {
     }, false);
   }
 
-  function loadSprite(sprite){
+  function loadSprite(sprite) {
     var canvas = document.createElement('canvas');
     canvas.width = sprite.width;
     canvas.height = sprite.height;
@@ -140,6 +123,25 @@ OM.Galaxy = new function() {
     scene.add(object);
 
     objects.push(object);
+  }
+
+  function createSphere() {
+
+    for (var i = 0; i < OM.photos.length; i++) {
+      addNodeToSphere(i);
+    }
+  }
+
+  function addNodeToSphere(index) {
+    var index = index || OM.photos.length - 1;
+    var phi = Math.acos(-1 + (2 * index) / OM.photos.length);
+    var theta = Math.sqrt(OM.photos.length * Math.PI) * phi;
+
+    positions.push(
+      radius * Math.cos(theta) * Math.sin(phi),
+      radius * Math.sin(theta) * Math.sin(phi),
+      radius * Math.cos(phi)
+    );
   }
 
 
