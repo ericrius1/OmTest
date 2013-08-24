@@ -61,7 +61,13 @@ OM.Galaxy = new function() {
   }
 
   this.addPhotos = function() {
-    console.log('load more!')
+    var sprite = document.createElement('img');
+    sprite.src = 'assets/flower.jpg';
+    sprite.addEventListener('load', function(event){
+      loadSprite(sprite);
+    }, false)
+
+
   }
 
   function onWindowResize() {
@@ -121,22 +127,28 @@ OM.Galaxy = new function() {
     sprites[sprites.length - 1].addEventListener('load', function() {
 
       for (var i = 0; i < OM.photos.length; i++) {
-        var canvas = document.createElement('canvas');
-        canvas.width = sprites[i].width;
-        canvas.height = sprites[i].height;
-
-        var context = canvas.getContext('2d');
-        context.drawImage(sprites[i], 0, 0);
-
-        var object = new THREE.CSS3DSprite(canvas);
-        object.position.x = Math.random() * 4000 - 2000,
-        object.position.y = Math.random() * 4000 - 2000,
-        object.position.z = Math.random() * 4000 - 2000
-        scene.add(object);
-
-        objects.push(object);
+        loadSprite(sprites[i]);
       }
+
+      transition();
     }, false);
+  }
+
+  function loadSprite(sprite){
+    var canvas = document.createElement('canvas');
+    canvas.width = sprite.width;
+    canvas.height = sprite.height;
+
+    var context = canvas.getContext('2d');
+    context.drawImage(sprite, 0, 0);
+
+    var object = new THREE.CSS3DSprite(canvas);
+    object.position.x = Math.random() * 4000 - 2000,
+    object.position.y = Math.random() * 4000 - 2000,
+    object.position.z = Math.random() * 4000 - 2000
+    scene.add(object);
+
+    objects.push(object);
   }
 
 
