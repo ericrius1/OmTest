@@ -1,7 +1,7 @@
 var OM = OM || {}
 
 OM.photos = [];
-OM.requestIntervalTime = 6000; //in milliseconds
+OM.requestIntervalTime = 3000; //in milliseconds
 OM.emptyWorld = true;
 $(function() {
   $('.instagram').on('didLoadInstagram', function(event, response) {

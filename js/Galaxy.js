@@ -41,12 +41,16 @@ OM.Galaxy = new function() {
   }
 
   this.addPhotos = function() {
+    //TEMP
+    OM.photos.push('assets/flower.jpg');
     var sprite = document.createElement('img');
-    sprite.src = 'assets/flower.jpg';
+    sprite.src = OM.photos[OM.photos.length-1];
     sprite.addEventListener('load', function(event) {
       loadSprite(sprite);
+      addNodeToSphere();
+      transitionOne(objects[objects.length-1]);
     }, false);
-    transitionAll();
+    
 
 
   }
@@ -67,7 +71,8 @@ OM.Galaxy = new function() {
   }
 
   function transitionOne(object, offset) {
-    var offset = offset || 0;
+    var offset = offset || (objects.length-1) * 3;
+    console.log(offset)
     var duration = 2000;
     new TWEEN.Tween(object.position)
       .to({
@@ -126,7 +131,6 @@ OM.Galaxy = new function() {
   }
 
   function createSphere() {
-
     for (var i = 0; i < OM.photos.length; i++) {
       addNodeToSphere(i);
     }
