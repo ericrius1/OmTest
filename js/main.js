@@ -26,6 +26,7 @@ $(function() {
 
   var queryInstagramTest = function() {
     console.log("slower")
+    addPhotos();
   }
 
 

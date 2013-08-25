@@ -30,11 +30,7 @@ OM.Galaxy = new function() {
     for (var i = 0; i < OM.photos.length; i++) {
       loaders.push(loadSprite(OM.photos[i]));
     }
-    $.when.apply(null, loaders).done(function() {
-      console.log("ALLDONE")
-      debugger;
-      loadInstagramPhotos();
-    });
+
 
     flowerSprite.addEventListener('load', function(event) {
       for (var i = 0; i < maxNodes; i++) {
@@ -123,6 +119,11 @@ OM.Galaxy = new function() {
 
     new TWEEN.Tween(this)
       .to({}, duration * 3)
+      .onComplete(function() {
+        $.when.apply(null, loaders).done(function() {
+          loadInstagramPhotos();
+        });
+      })
       .start();
   }
 
@@ -191,7 +192,6 @@ OM.Galaxy = new function() {
 
   this.addPhotos = function() {
     OM.photos.push(OM.photos[0]);
-
 
 
   }
