@@ -27,19 +27,25 @@ OM.Galaxy = new function() {
 
     var flowerSprite = document.createElement('img');
     flowerSprite.src = 'assets/flower.jpg';
+    loaders.push(flowerSprite);
     for (var i = 0; i < OM.photos.length; i++) {
       loaders.push(loadSprite(OM.photos[i]));
     }
 
-
-    flowerSprite.addEventListener('load', function(event) {
+    $.when.apply(null, loaders).done(function() {
+      var sprite;
       for (var i = 0; i < maxNodes; i++) {
-        sprites.push(flowerSprite);
+        if (i < instaSprites.length) {
+          sprite = instaSprites[i];
+        } else {
+          sprite = flowerSprite;
+        }
+        sprites.push(sprite);
         var canvas = document.createElement('canvas');
-        canvas.width = flowerSprite.width;
-        canvas.height = flowerSprite.height;
+        canvas.width = sprite.width;
+        canvas.height = sprite.height;
         var context = canvas.getContext('2d');
-        context.drawImage(flowerSprite, 0, 0);
+        context.drawImage(sprite, 0, 0);
         var object = new THREE.CSS3DSprite(canvas);
         object.position.x = Math.random() * 4000 - 2000,
         object.position.y = Math.random() * 4000 - 2000,
@@ -48,11 +54,8 @@ OM.Galaxy = new function() {
 
         objects.push(object);
       }
-
       initalAnimation();
-
-
-    }, false);
+    });
 
 
 
@@ -119,11 +122,6 @@ OM.Galaxy = new function() {
 
     new TWEEN.Tween(this)
       .to({}, duration * 3)
-      .onComplete(function() {
-        $.when.apply(null, loaders).done(function() {
-          loadInstagramPhotos();
-        });
-      })
       .start();
   }
 
