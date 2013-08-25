@@ -106,7 +106,7 @@ OM.Galaxy = new function() {
 
     controls = new THREE.TrackballControls(camera, renderer.domElement);
     controls.rotateSpeed = 0.1;
-    controls.dynamicDampingFactor = 0.5;
+    controls.dynamicDampingFactor = 0.2;
 
     window.addEventListener('resize', onWindowResize, false);
 
