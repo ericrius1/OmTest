@@ -14,22 +14,28 @@ OM.Galaxy = new function() {
   var pulsingPower = 0.02
   var pulsingSpeed = 0.002
   var newPhotoDuration = 2000;
-  var duration = 500;
+  var startingDuration = 500;
+  var camDuration = 1500;
   var prevPhotoIndex;
   var time;
   var pulseStrength = 0.001;
   var pulseSpeed = 0.0004;
   var camRotateSpeed = 0.07;
-  var lat = 0,
+  var lat = 85,
     lon = 0,
     phi = 0,
     theta = 0;
+  var startCamPos = {
+    x: -91,
+    y: 230,
+    z: -1845
+  }
 
   this.init = function() {
     OM.emptyWorld = false;
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    camera.position.set(-135, 340, -2720);
+    camera.position.set(startCamPos.x, startCamPos.y, startCamPos.z);
     camera.lookAt(new THREE.Vector3());
 
     scene = new THREE.Scene();
@@ -122,14 +128,14 @@ OM.Galaxy = new function() {
           x: positions[j],
           y: positions[j + 1],
           z: positions[j + 2]
-        }, Math.random() * duration + duration)
+        }, Math.random() * startingDuration + startingDuration)
         .easing(TWEEN.Easing.Exponential.InOut)
         .start();
 
     }
 
     new TWEEN.Tween(this)
-      .to({}, duration * 3)
+      .to({}, startingDuration * 3)
       .start();
   }
 
@@ -179,18 +185,38 @@ OM.Galaxy = new function() {
     objects.pop();;
   }
 
+  this.findCenter = function() {
+    new TWEEN.Tween(camera.position)
+      .to({
+        x: 99.9999,
+        y: 0,
+        z: 0.12217
+      }, Math.random() * camDuration + camDuration)
+      .easing(TWEEN.Easing.Exponential.InOut)
+      .onComplete(function() {
+        $('.center').text("View the Whole");
+      })
+      .start();
+
+  }
+
+  this.leaveCenter = function() {
+    new TWEEN.Tween(camera.position)
+      .to({
+        x: startCamPos.x,
+        y: startCamPos.y,
+        z: startCamPos.z
+      }, Math.random() * camDuration + camDuration)
+      .easing(TWEEN.Easing.Exponential.InOut)
+      .onComplete(function() {
+        $('.center').text("Find your center");
+      })
+      .start();
+
+  }
 
   function animate() {
     time = Date.now();
-    if(OM.centered) {
-      lon += camRotateSpeed;
-      lat = Math.max(-85, Math.min(85, lat));
-      phi = THREE.Math.degToRad(90 - lat);
-      theta = THREE.Math.degToRad(lon);
-      camera.position.x = 100 * Math.sin(phi) * Math.cos(theta);
-      camera.position.y = 100 * Math.cos(phi);
-      camera.position.z = 100 * Math.sin(phi) * Math.sin(theta);
-    }
 
 
     requestAnimationFrame(animate);

@@ -74,8 +74,15 @@ $(function() {
 
   window.setInterval(queryInstagram, OM.requestIntervalTime);
 
-  $('.center').on('click', function(){
+  $('.center').on('click', function() {
     OM.centered = !OM.centered;
+    if (OM.centered) {
+      OM.Galaxy.findCenter();
+      
+    } else {
+
+      OM.Galaxy.leaveCenter();
+    }
   });
 
 
