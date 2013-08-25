@@ -1,7 +1,7 @@
 var OM = OM || {}
 
 OM.photos = [];
-OM.requestIntervalTime = 10000; //in milliseconds
+OM.requestIntervalTime = 1000000; //in milliseconds
 OM.emptyWorld = true;
 $(function() {
   var flatMode = false;
@@ -14,9 +14,9 @@ $(function() {
     if (OM.emptyWorld) {
       OM.Galaxy.init()
       $('#container').on('click', 'canvas', function(event) {
-        toggleView();
+        toggleView(event.target.dataset.source);
       })
-      $('.instagram').on('click', 'img', function(event){
+      $('.instagram').on('click', 'img', function(event) {
         toggleView();
       })
 
@@ -30,15 +30,18 @@ $(function() {
 
   });
 
-  var toggleView = function() {
+  var toggleView = function(targetSource) {
     flatMode = !flatMode;
     if (flatMode) {
       $('#container').hide();
+      var selectedSource
       OM.photos.map(function(photo) {
-        $('.instagram').prepend('<img src="' + photo + '" />');
+        if (photo !== targetSource) {
+          $('.instagram').prepend('<img src="' + photo + '" />');
+        }
       });
-    }
-    else{
+      $('.instagram').prepend('<img src="' + targetSource + '"/>');
+    } else {
       $('.instagram').empty();
       $('#container').show();
     }
@@ -48,7 +51,6 @@ $(function() {
   var getNewPhotos = function() {
     //Get rid of duplicate photos
     OM.photos = _.uniq(OM.photos);
-    console.log("photos lenght", OM.photos.length)
     return OM.photos.slice(currentPhotoIndex);
 
   }

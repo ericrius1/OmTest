@@ -47,6 +47,7 @@ OM.Galaxy = new function() {
         var canvas = document.createElement('canvas');
         canvas.width = sprite.width;
         canvas.height = sprite.height;
+        canvas.setAttribute('data-source', sprite.src);
         var context = canvas.getContext('2d');
         context.drawImage(sprite, 0, 0);
         var object = new THREE.CSS3DSprite(canvas);
@@ -89,6 +90,7 @@ OM.Galaxy = new function() {
 
     controls = new THREE.TrackballControls(camera, renderer.domElement);
     controls.rotateSpeed = 0.1;
+    controls.dynamicDampingFactor = 0.5;
 
     //
 
