@@ -1,10 +1,16 @@
+//FLIP DIRECTION WHILE INSIDE SPHERE
+//Random Initial distribution
+//When user lcicks to go to 2d mode, start zooming in in 3d, then once dom is ready show 2d mode
+
+
+
 var OM = OM || {};
 OM.Galaxy = new function() {
 
   var camera, scene, renderer;
   var controls;
 
-  var maxNodes = 60;
+  var maxNodes = 90;
   var radius = maxNodes * 15;
   var sprites = [];
   var instaSprites = [];

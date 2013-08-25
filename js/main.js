@@ -61,7 +61,7 @@ $(function() {
 
   var queryInstagram = function() {
     $('.instagram').instagram({
-      hash: 'love',
+      hash: 'omies',
       clientId: 'cf4ba7af04c942d0a1a141253b04fd16'
     });
   }
