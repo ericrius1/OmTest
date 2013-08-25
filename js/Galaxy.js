@@ -183,14 +183,12 @@ OM.Galaxy = new function() {
     renderer.render(scene, camera);
   }
 
-  this.addPhotos = function() {
+  this.addPhotos = function(photos) {
     var sprite = document.createElement('img');
     sprite.onload = function(){
       addNewPhoto(sprite)
     }
     sprite.src = OM.photos[OM.photos.length-1];
-
-
 
   }
 

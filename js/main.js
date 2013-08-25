@@ -4,18 +4,31 @@ OM.photos = [];
 OM.requestIntervalTime = 10000; //in milliseconds
 OM.emptyWorld = true;
 $(function() {
+  var currentPhotoIndex;
   $('.instagram').on('didLoadInstagram', function(event, response) {
     response.data.map(function(photo) {
       console.log("new request")
       OM.photos.push(photo.images.low_resolution.url);
     });
 
-    OM.emptyWorld ? OM.Galaxy.init(): OM.Galaxy.addPhotos();
+    if (OM.emptyWorld) {
+      OM.Galaxy.init()
+      currentPhotoIndex = OM.photos.length - 1;
+    } else {
+      var newPhotos = getNewPhotos();
+      OM.Galaxy.addPhotos(newPhotos);
+      currentPhotoIndex = OM.photos.length - 1;
+    }
 
 
   });
 
+  var getNewPhotos = function() {
+    //Get rid of duplicate photos
+    OM.photos = _.uniq(OM.photos);
+    return OM.photos.slice(currentPhotoIndex);
 
+  }
 
   var queryInstagram = function() {
     $('.instagram').instagram({
@@ -31,8 +44,8 @@ $(function() {
 
 
   queryInstagram();
-  setTimeout(function(){
-      window.setInterval(queryInstagram, OM.requestIntervalTime);
+  setTimeout(function() {
+    window.setInterval(queryInstagram, OM.requestIntervalTime);
   }, 4000)
 
 
