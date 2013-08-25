@@ -1,7 +1,7 @@
 var OM = OM || {}
 
 OM.photos = [];
-OM.requestIntervalTime = 30000; //in milliseconds
+OM.requestIntervalTime = 10000; //in milliseconds
 OM.emptyWorld = true;
 $(function() {
   var currentPhotoIndex;
@@ -13,11 +13,16 @@ $(function() {
 
     if (OM.emptyWorld) {
       OM.Galaxy.init()
-      currentPhotoIndex = OM.photos.length - 1;
+      $('#container').on('click', 'canvas', function(event) {
+        debugger;
+        console.log('shnur');
+      })
+
+      currentPhotoIndex = OM.photos.length;
     } else {
       var newPhotos = getNewPhotos();
       OM.Galaxy.addPhotos(newPhotos);
-      currentPhotoIndex = OM.photos.length - 1;
+      currentPhotoIndex = OM.photos.length;
     }
 
 
@@ -26,6 +31,8 @@ $(function() {
   var getNewPhotos = function() {
     //Get rid of duplicate photos
     OM.photos = _.uniq(OM.photos);
+    console.log("photos lenght", OM.photos.length)
+    var newPhotos = OM.photos.slice(currentPhotoIndex)
     return OM.photos.slice(currentPhotoIndex);
 
   }
@@ -44,9 +51,8 @@ $(function() {
 
 
   queryInstagram();
-  setTimeout(function() {
-    window.setInterval(queryInstagram, OM.requestIntervalTime);
-  }, 4000)
+
+  window.setInterval(queryInstagram, OM.requestIntervalTime);
 
 
 

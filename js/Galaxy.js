@@ -15,7 +15,7 @@ OM.Galaxy = new function() {
   var pulsingSpeed = 0.002
   var newPhotoDuration = 2000;
   var duration = 500;
-  var prevPhotoCount;
+  var prevPhotoIndex;
 
   this.init = function() {
     OM.emptyWorld = false;
@@ -57,6 +57,7 @@ OM.Galaxy = new function() {
 
         objects.push(object);
       }
+      prevPhotoIndex = instaSprites.length;
       initalAnimation();
     });
 
@@ -185,16 +186,18 @@ OM.Galaxy = new function() {
   }
 
   this.addPhotos = function(photos) {
+    if(photos.length === 0){
+      return;
+    }
     var loaders = [];
     for (var i = 0; i < photos.length; i++) {
       loaders.push(loadSprite(photos[i]));
     }
-    prevPhotoCount = photos.length;
      $.when.apply(null, loaders).done(function() {
-      for(var i = prevPhotoCount; i < instaSprites.length; i++){
+      for(var i = prevPhotoIndex; i < instaSprites.length; i++){
         addNewPhoto(instaSprites[i]);
       }
-      prevPhotoCount = instaSprites.length;
+      prevPhotoIndex = instaSprites.length;
       
     });
 
