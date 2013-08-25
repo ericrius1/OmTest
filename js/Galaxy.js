@@ -8,7 +8,6 @@ OM.Galaxy = new function() {
   var radius = maxNodes * 15;
   var sprites = [];
   var instaSprites = [];
-  var loaders = [];
   var positions = [];
   var objects = [];
   var current = 0;
@@ -16,6 +15,7 @@ OM.Galaxy = new function() {
   var pulsingSpeed = 0.002
   var newPhotoDuration = 2000;
   var duration = 500;
+  var prevPhotoCount;
 
   this.init = function() {
     OM.emptyWorld = false;
@@ -29,6 +29,7 @@ OM.Galaxy = new function() {
 
     var flowerSprite = document.createElement('img');
     flowerSprite.src = 'assets/flower.jpg';
+    var loaders = [];
     loaders.push(flowerSprite);
     for (var i = 0; i < OM.photos.length; i++) {
       loaders.push(loadSprite(OM.photos[i]));
@@ -131,7 +132,7 @@ OM.Galaxy = new function() {
     var deferred = $.Deferred();
     var sprite = document.createElement('img');
     sprite.onload = function() {
-      instaSprites.push(sprite)
+      instaSprites.push(sprite);
       deferred.resolve();
     };
     sprite.src = src;
@@ -184,11 +185,18 @@ OM.Galaxy = new function() {
   }
 
   this.addPhotos = function(photos) {
-    var sprite = document.createElement('img');
-    sprite.onload = function(){
-      addNewPhoto(sprite)
+    var loaders = [];
+    for (var i = 0; i < photos.length; i++) {
+      loaders.push(loadSprite(photos[i]));
     }
-    sprite.src = OM.photos[OM.photos.length-1];
+    prevPhotoCount = photos.length;
+     $.when.apply(null, loaders).done(function() {
+      for(var i = prevPhotoCount; i < instaSprites.length; i++){
+        addNewPhoto(instaSprites[i]);
+      }
+      prevPhotoCount = instaSprites.length;
+      
+    });
 
   }
 

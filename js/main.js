@@ -1,7 +1,7 @@
 var OM = OM || {}
 
 OM.photos = [];
-OM.requestIntervalTime = 10000; //in milliseconds
+OM.requestIntervalTime = 30000; //in milliseconds
 OM.emptyWorld = true;
 $(function() {
   var currentPhotoIndex;
