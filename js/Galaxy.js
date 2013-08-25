@@ -18,12 +18,14 @@ OM.Galaxy = new function() {
   var duration = 500;
 
   this.init = function() {
+    OM.emptyWorld = false;
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
     camera.position.set(-135, 340, -2720);
     camera.lookAt(new THREE.Vector3());
 
     scene = new THREE.Scene();
+
 
     var flowerSprite = document.createElement('img');
     flowerSprite.src = 'assets/flower.jpg';
@@ -148,24 +150,18 @@ OM.Galaxy = new function() {
 
   }
 
-  function loadInstagramPhotos() {
-    console.log("num insta", instaSprites.length);
-    for (var i = 0; i < instaSprites.length; i++) {
-      addNewPhoto(i);
-    }
-  }
 
-  function addNewPhoto(index) {
+  function addNewPhoto(sprite) {
     //delete old object
     var oldObject = objects[0];
     scene.remove(oldObject);
 
     //add new one
     var canvas = document.createElement('canvas');
-    canvas.width = instaSprites[index].width;
-    canvas.height = instaSprites[index].height;
+    canvas.width = sprite.width;
+    canvas.height = sprite.height;
     var context = canvas.getContext('2d');
-    context.drawImage(instaSprites[index], 0, 0);
+    context.drawImage(sprite, 0, 0);
     var object = new THREE.CSS3DSprite(canvas);
     scene.add(object);
     object.position.x = Math.random() * 4000 - 2000,
@@ -174,7 +170,6 @@ OM.Galaxy = new function() {
     newPhotoAnimation(object, oldObject.position)
     objects.push(object);
     objects.shift();
-    console.log('objects', objects.length)
   }
 
 
@@ -189,7 +184,12 @@ OM.Galaxy = new function() {
   }
 
   this.addPhotos = function() {
-    OM.photos.push(OM.photos[0]);
+    var sprite = document.createElement('img');
+    sprite.onload = function(){
+      addNewPhoto(sprite)
+    }
+    sprite.src = OM.photos[OM.photos.length-1];
+
 
 
   }

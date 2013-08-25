@@ -1,7 +1,7 @@
 var OM = OM || {}
 
 OM.photos = [];
-OM.requestIntervalTime = 100000; //in milliseconds
+OM.requestIntervalTime = 10000; //in milliseconds
 OM.emptyWorld = true;
 $(function() {
   $('.instagram').on('didLoadInstagram', function(event, response) {
@@ -19,20 +19,22 @@ $(function() {
 
   var queryInstagram = function() {
     $('.instagram').instagram({
-      hash: 'omies',
+      hash: 'love',
       clientId: 'cf4ba7af04c942d0a1a141253b04fd16'
     });
   }
 
   var queryInstagramTest = function() {
-    console.log("slower")
-    addPhotos();
+    OM.Galaxy.addPhotos();
   }
 
 
 
   queryInstagram();
-  window.setInterval(queryInstagramTest, OM.requestIntervalTime);
+  setTimeout(function(){
+      window.setInterval(queryInstagram, OM.requestIntervalTime);
+  }, 4000)
+
 
 
 });
