@@ -19,6 +19,11 @@ OM.Galaxy = new function() {
   var time;
   var pulseStrength = 0.002;
   var pulseSpeed = 0.0004;
+  var camRotateSpeed = 0.07;
+  var lat = 0,
+    lon = 0,
+    phi = 0,
+    theta = 0;
 
   this.init = function() {
     OM.emptyWorld = false;
@@ -178,6 +183,14 @@ OM.Galaxy = new function() {
   function animate() {
     time = Date.now();
 
+    lon += camRotateSpeed;
+    lat = Math.max(-85, Math.min(85, lat));
+    phi = THREE.Math.degToRad(90 - lat);
+    theta = THREE.Math.degToRad(lon);
+    camera.position.x = 100 * Math.sin(phi) * Math.cos(theta);
+    camera.position.y = 100 * Math.cos(phi);
+    camera.position.z = 100 * Math.sin(phi) * Math.sin(theta);
+
     requestAnimationFrame(animate);
 
     TWEEN.update();
@@ -189,6 +202,8 @@ OM.Galaxy = new function() {
       object.scale.set(scale, scale, scale);
 
     }
+
+
 
     renderer.render(scene, camera);
   }
