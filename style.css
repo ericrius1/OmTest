@@ -1,3 +1,8 @@
 #container {
     -webkit-transform: translateZ(0);
 }
+
+canvas:hover {
+        box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
+        border: 10px solid rgba(255,11,255,0.75);
+}

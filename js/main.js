@@ -4,6 +4,7 @@ OM.photos = [];
 OM.requestIntervalTime = 10000; //in milliseconds
 OM.emptyWorld = true;
 $(function() {
+  var flatMode = false;
   var currentPhotoIndex;
   $('.instagram').on('didLoadInstagram', function(event, response) {
     response.data.map(function(photo) {
@@ -14,8 +15,8 @@ $(function() {
     if (OM.emptyWorld) {
       OM.Galaxy.init()
       $('#container').on('click', 'canvas', function(event) {
-        debugger;
         console.log('shnur');
+        toggleView();
       })
 
       currentPhotoIndex = OM.photos.length;
@@ -28,11 +29,25 @@ $(function() {
 
   });
 
+  var toggleView = function() {
+    flatMode = !flatMode;
+    if (flatMode) {
+      $('#container').hide();
+      OM.photos.map(function(photo) {
+        $('.instagram').prepend('<img src="' + photo + '" />');
+      });
+    }
+    else{
+      $('.instagram').hide();
+      $('.container').show();
+    }
+
+  }
+
   var getNewPhotos = function() {
     //Get rid of duplicate photos
     OM.photos = _.uniq(OM.photos);
     console.log("photos lenght", OM.photos.length)
-    var newPhotos = OM.photos.slice(currentPhotoIndex)
     return OM.photos.slice(currentPhotoIndex);
 
   }
