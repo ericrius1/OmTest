@@ -153,7 +153,7 @@ OM.Galaxy = new function() {
 
   function addNewPhoto(sprite) {
     //delete old object
-    var oldObject = objects[0];
+    var oldObject = objects[objects.length-1];
     scene.remove(oldObject);
 
     //add new one
@@ -168,8 +168,8 @@ OM.Galaxy = new function() {
     object.position.y = Math.random() * 4000 - 2000,
     object.position.z = Math.random() * 4000 - 2000
     newPhotoAnimation(object, oldObject.position)
-    objects.push(object);
-    objects.shift();
+    objects.unshift(object);
+    objects.pop();;
   }
 
 
