@@ -32,9 +32,9 @@ OM.Galaxy = new function() {
     phi = 0,
     theta = 0;
   var startCamPos = {
-    x: -91,
-    y: 230,
-    z: -1845
+    x: -117,
+    y: 297,
+    z: -2386
   }
 
   this.init = function() {
