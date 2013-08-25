@@ -3,7 +3,7 @@ var OM = OM || {}
 OM.photos = [];
 
 //This variable determines how often we ping instagram for more photos
-OM.requestIntervalTime = 5000; //in milliseconds
+OM.requestIntervalTime = 30000; //in milliseconds
 OM.emptyWorld = true;
 $(function() {
   var flatMode = false;
