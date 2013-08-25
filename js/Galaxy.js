@@ -4,7 +4,7 @@ OM.Galaxy = new function() {
   var camera, scene, renderer;
   var controls;
 
-  var maxNodes = 111;
+  var maxNodes = 60;
   var radius = maxNodes * 15;
   var sprites = [];
   var instaSprites = [];
@@ -16,6 +16,9 @@ OM.Galaxy = new function() {
   var newPhotoDuration = 2000;
   var duration = 500;
   var prevPhotoIndex;
+  var time;
+  var pulseStrength = 0.002;
+  var pulseSpeed = 0.0004;
 
   this.init = function() {
     OM.emptyWorld = false;
@@ -173,11 +176,19 @@ OM.Galaxy = new function() {
 
 
   function animate() {
+    time = Date.now();
 
     requestAnimationFrame(animate);
 
     TWEEN.update();
     controls.update();
+
+    for (var i = 0, len = objects.length; i < len; i++) {
+      var object = objects[i];
+      var scale = Math.sin((Math.floor(object.position.x) + time) * pulseSpeed) * 0.3 + 1;
+      object.scale.set(scale, scale, scale);
+
+    }
 
     renderer.render(scene, camera);
   }
