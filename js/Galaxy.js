@@ -17,7 +17,7 @@ OM.Galaxy = new function() {
   var duration = 500;
   var prevPhotoIndex;
   var time;
-  var pulseStrength = 0.002;
+  var pulseStrength = 0.001;
   var pulseSpeed = 0.0004;
   var camRotateSpeed = 0.07;
   var lat = 0,
@@ -182,14 +182,16 @@ OM.Galaxy = new function() {
 
   function animate() {
     time = Date.now();
+    if(OM.centered) {
+      lon += camRotateSpeed;
+      lat = Math.max(-85, Math.min(85, lat));
+      phi = THREE.Math.degToRad(90 - lat);
+      theta = THREE.Math.degToRad(lon);
+      camera.position.x = 100 * Math.sin(phi) * Math.cos(theta);
+      camera.position.y = 100 * Math.cos(phi);
+      camera.position.z = 100 * Math.sin(phi) * Math.sin(theta);
+    }
 
-    lon += camRotateSpeed;
-    lat = Math.max(-85, Math.min(85, lat));
-    phi = THREE.Math.degToRad(90 - lat);
-    theta = THREE.Math.degToRad(lon);
-    camera.position.x = 100 * Math.sin(phi) * Math.cos(theta);
-    camera.position.y = 100 * Math.cos(phi);
-    camera.position.z = 100 * Math.sin(phi) * Math.sin(theta);
 
     requestAnimationFrame(animate);
 

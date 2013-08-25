@@ -5,6 +5,7 @@ OM.photos = [];
 //This variable determines how often we ping instagram for more photos
 OM.requestIntervalTime = 3000; //in milliseconds
 OM.emptyWorld = true;
+OM.centered = false;
 $(function() {
   var flatMode = false;
   var currentPhotoIndex;
@@ -69,11 +70,13 @@ $(function() {
     OM.Galaxy.addPhotos();
   }
 
-
-
   queryInstagram();
 
   window.setInterval(queryInstagram, OM.requestIntervalTime);
+
+  $('.center').on('click', function(){
+    OM.centered = !OM.centered;
+  });
 
 
 
