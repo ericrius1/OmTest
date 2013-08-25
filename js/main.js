@@ -8,14 +8,15 @@ $(function() {
   var currentPhotoIndex;
   $('.instagram').on('didLoadInstagram', function(event, response) {
     response.data.map(function(photo) {
-      console.log("new request")
       OM.photos.push(photo.images.low_resolution.url);
     });
 
     if (OM.emptyWorld) {
       OM.Galaxy.init()
       $('#container').on('click', 'canvas', function(event) {
-        console.log('shnur');
+        toggleView();
+      })
+      $('.instagram').on('click', 'img', function(event){
         toggleView();
       })
 
@@ -38,8 +39,8 @@ $(function() {
       });
     }
     else{
-      $('.instagram').hide();
-      $('.container').show();
+      $('.instagram').empty();
+      $('#container').show();
     }
 
   }
