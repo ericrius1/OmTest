@@ -64,8 +64,7 @@ OM.Galaxy = new function() {
 
 
 
-    // Sphere
-
+    // Create Nodes for the construction of the sphere
     for (var i = 0; i < maxNodes; i++) {
 
       var phi = Math.acos(-1 + (2 * i) / maxNodes);
@@ -79,20 +78,15 @@ OM.Galaxy = new function() {
 
     }
 
-    //
-
     renderer = new THREE.CSS3DRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.style.position = 'absolute';
     document.getElementById('container').appendChild(renderer.domElement);
 
-    //
 
     controls = new THREE.TrackballControls(camera, renderer.domElement);
     controls.rotateSpeed = 0.1;
     controls.dynamicDampingFactor = 0.5;
-
-    //
 
     window.addEventListener('resize', onWindowResize, false);
 
@@ -157,13 +151,14 @@ OM.Galaxy = new function() {
 
   function addNewPhoto(sprite) {
     //delete old object
-    var oldObject = objects[objects.length-1];
+    var oldObject = objects[objects.length - 1];
     scene.remove(oldObject);
 
     //add new one
     var canvas = document.createElement('canvas');
     canvas.width = sprite.width;
     canvas.height = sprite.height;
+    canvas.setAttribute('data-source', sprite.src);
     var context = canvas.getContext('2d');
     context.drawImage(sprite, 0, 0);
     var object = new THREE.CSS3DSprite(canvas);
@@ -188,19 +183,19 @@ OM.Galaxy = new function() {
   }
 
   this.addPhotos = function(photos) {
-    if(photos.length === 0){
+    if (photos.length === 0) {
       return;
     }
     var loaders = [];
     for (var i = 0; i < photos.length; i++) {
       loaders.push(loadSprite(photos[i]));
     }
-     $.when.apply(null, loaders).done(function() {
-      for(var i = prevPhotoIndex; i < instaSprites.length; i++){
+    $.when.apply(null, loaders).done(function() {
+      for (var i = prevPhotoIndex; i < instaSprites.length; i++) {
         addNewPhoto(instaSprites[i]);
       }
       prevPhotoIndex = instaSprites.length;
-      
+
     });
 
   }
