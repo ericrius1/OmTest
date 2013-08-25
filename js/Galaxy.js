@@ -10,7 +10,7 @@ OM.Galaxy = new function() {
   var camera, scene, renderer;
   var controls;
 
-  var maxNodes = 90;
+  var maxNodes = 60;
   var radius = maxNodes * 15;
   var sprites = [];
   var instaSprites = [];
