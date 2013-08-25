@@ -61,7 +61,7 @@ $(function() {
 
   var queryInstagram = function() {
     $('.instagram').instagram({
-      hash: 'omies',
+      hash: 'golf',
       clientId: 'cf4ba7af04c942d0a1a141253b04fd16'
     });
   }
