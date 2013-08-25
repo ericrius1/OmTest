@@ -3,7 +3,7 @@ var OM = OM || {}
 OM.photos = [];
 
 //This variable determines how often we ping instagram for more photos
-OM.requestIntervalTime = 3000; //in milliseconds
+OM.requestIntervalTime = 20000; //in milliseconds
 OM.emptyWorld = true;
 OM.centered = false;
 $(function() {
@@ -61,7 +61,7 @@ $(function() {
 
   var queryInstagram = function() {
     $('.instagram').instagram({
-      hash: 'omies',
+      hash: 'love',
       clientId: 'cf4ba7af04c942d0a1a141253b04fd16'
     });
   }
@@ -78,9 +78,7 @@ $(function() {
     OM.centered = !OM.centered;
     if (OM.centered) {
       OM.Galaxy.findCenter();
-      
     } else {
-
       OM.Galaxy.leaveCenter();
     }
   });
