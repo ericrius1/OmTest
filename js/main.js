@@ -81,20 +81,17 @@ $(function() {
     }
   });
 
-  $('#begin').on('click', function(){
-    visActive =!visActive;
-    if(visActive){
-      debugger;
-      $(window.parent.document).scrollTop($(window.parent.document).height());
-      $('#container').show();
-      $('#begin').text("Exit");
-    }
-    else{
+  $('#begin').on('click', function() {
+    visActive = !visActive;
+    if (visActive) {
+      $('html,body', window.parent.document).animate({
+        scrollTop: '+=700px'
+      }, 'fast');
+    } else {
       $('#container').hide();
       $('#begin').text("Enter the Source");
     }
   })
-
 
 
 
