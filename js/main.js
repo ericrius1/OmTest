@@ -17,7 +17,6 @@ $(function() {
 
     if (OM.emptyWorld) {
       OM.Galaxy.init()
-      $('#container').hide();
       $('#container').on('click', 'canvas', function(event) {
         $('#return').show();
         toggleView(event.target.dataset.source);
@@ -41,13 +40,11 @@ $(function() {
     if (flatMode) {
       $('#container').hide();
       $('.instagram').prepend('<img src="' + targetSource + '"/>');
-      $('#begin').hide();
     } else {
       window.scrollTo(0, 0);
       $('#return').hide();
       $('.instagram').empty();
       $('#container').show();
-      $('#begin').show();
     }
 
   }
@@ -87,15 +84,15 @@ $(function() {
     visActive = !visActive;
     if (visActive) {
       $('#container').show();
-      $('#begin').text("Exit");
 
 
     } else {
       $('#container').hide();
-      $('#begin').text("Enter the Source");
     }
   })
 
 
 
 });
+
+//iframe class='visualization' src = "http://ericrius1.github.io/OmTest" scrolling = "no"
