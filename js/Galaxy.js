@@ -21,7 +21,7 @@ OM.Galaxy = new function() {
   var pulsingSpeed = 0.002
   var newPhotoDuration = 2000;
   var startingDuration = 500;
-  var camDuration = 1500;
+  var centeringDuration = 1500;
   var prevPhotoIndex;
   var time;
   var pulseStrength = 0.001;
@@ -43,9 +43,6 @@ OM.Galaxy = new function() {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
     camera.position.set(startCamPos.x, startCamPos.y, startCamPos.z);
     camera.lookAt(new THREE.Vector3());
-
-
-
 
     scene = new THREE.Scene();
 
@@ -201,8 +198,8 @@ OM.Galaxy = new function() {
         x: -14,
         y: 40,
         z: -296
-      }, Math.random() * camDuration + camDuration)
-      .easing(TWEEN.Easing.Exponential.InOut)
+      }, Math.random() * centeringDuration + centeringDuration)
+      .easing(TWEEN.Easing.Exponential.Out)
       .onComplete(function() {
         $('#center').text("View the Whole");
         controls.invertPitch = true;
@@ -218,8 +215,8 @@ OM.Galaxy = new function() {
         x: startCamPos.x,
         y: startCamPos.y,
         z: startCamPos.z
-      }, Math.random() * camDuration + camDuration)
-      .easing(TWEEN.Easing.Exponential.InOut)
+      }, Math.random() * centeringDuration + centeringDuration)
+      .easing(TWEEN.Easing.Exponential.Out)
       .onComplete(function() {
         $('#center').text("Find your center");
       })
