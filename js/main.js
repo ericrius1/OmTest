@@ -88,6 +88,7 @@ $(function() {
     if (visActive) {
       $('#container').show();
       $('#begin').text("Exit");
+      
 
     } else {
       $('#container').hide();
