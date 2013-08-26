@@ -47,10 +47,10 @@ OM.Galaxy = new function() {
     scene = new THREE.Scene();
 
 
-    var flowerSprite = document.createElement('img');
-    flowerSprite.src = 'assets/yantra2.png';
+    var yantraSprite = document.createElement('img');
+    yantraSprite.src = 'assets/yantra2.png';
     var loaders = [];
-    loaders.push(flowerSprite);
+    loaders.push(yantraSprite);
     for (var i = 0; i < OM.photos.length; i++) {
       loaders.push(loadSprite(OM.photos[i]));
     }
@@ -61,7 +61,7 @@ OM.Galaxy = new function() {
         if (i < instaSprites.length) {
           sprite = instaSprites[i];
         } else {
-          sprite = flowerSprite;
+          sprite = yantraSprite;
         }
         sprites.push(sprite);
         var canvas = document.createElement('canvas');

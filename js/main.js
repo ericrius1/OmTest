@@ -17,9 +17,10 @@ $(function() {
     if (OM.emptyWorld) {
       OM.Galaxy.init()
       $('#container').on('click', 'canvas', function(event) {
+        $('#return').show();
         toggleView(event.target.dataset.source);
       })
-      $('.instagram').on('click', 'img', function(event) {
+      $('#return').on('click', function(event) {
         toggleView();
       })
 
@@ -37,14 +38,10 @@ $(function() {
     flatMode = !flatMode;
     if (flatMode) {
       $('#container').hide();
-      // OM.photos.map(function(photo) {
-      //   if (photo !== targetSource) {
-      //     $('.instagram').prepend('<img src="' + photo + '" />');
-      //   }
-      // });
       $('.instagram').prepend('<img src="' + targetSource + '"/>');
     } else {
       window.scrollTo(0, 0);
+      $('#return').hide();
       $('.instagram').empty();
       $('#container').show();
     }
@@ -73,7 +70,7 @@ $(function() {
 
   window.setInterval(queryInstagram, OM.requestIntervalTime);
 
-  $('.center').on('click', function() {
+  $('#center').on('click', function() {
     OM.centered = !OM.centered;
     if (OM.centered) {
       OM.Galaxy.findCenter();
@@ -81,6 +78,7 @@ $(function() {
       OM.Galaxy.leaveCenter();
     }
   });
+
 
 
 
