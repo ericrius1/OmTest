@@ -44,6 +44,9 @@ OM.Galaxy = new function() {
     camera.position.set(startCamPos.x, startCamPos.y, startCamPos.z);
     camera.lookAt(new THREE.Vector3());
 
+
+
+
     scene = new THREE.Scene();
 
 
@@ -103,10 +106,12 @@ OM.Galaxy = new function() {
     renderer.domElement.style.position = 'absolute';
     document.getElementById('container').appendChild(renderer.domElement);
 
-
+    
     controls = new THREE.TrackballControls(camera, renderer.domElement);
     controls.rotateSpeed = 0.1;
     controls.dynamicDampingFactor = 0.2;
+    controls.noRoll = true;
+
 
     window.addEventListener('resize', onWindowResize, false);
 
@@ -201,6 +206,8 @@ OM.Galaxy = new function() {
       .easing(TWEEN.Easing.Exponential.InOut)
       .onComplete(function() {
         $('.center').text("View the Whole");
+        controls.invertPitch = true;
+
       })
       .start();
 
