@@ -37,12 +37,11 @@ $(function() {
     flatMode = !flatMode;
     if (flatMode) {
       $('#container').hide();
-      var selectedSource
-      OM.photos.map(function(photo) {
-        if (photo !== targetSource) {
-          $('.instagram').prepend('<img src="' + photo + '" />');
-        }
-      });
+      // OM.photos.map(function(photo) {
+      //   if (photo !== targetSource) {
+      //     $('.instagram').prepend('<img src="' + photo + '" />');
+      //   }
+      // });
       $('.instagram').prepend('<img src="' + targetSource + '"/>');
     } else {
       window.scrollTo(0, 0);

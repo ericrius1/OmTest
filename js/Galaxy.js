@@ -48,7 +48,7 @@ OM.Galaxy = new function() {
 
 
     var flowerSprite = document.createElement('img');
-    flowerSprite.src = 'assets/sphere-yantra-small-cropped.png';
+    flowerSprite.src = 'assets/yantra2.png';
     var loaders = [];
     loaders.push(flowerSprite);
     for (var i = 0; i < OM.photos.length; i++) {
