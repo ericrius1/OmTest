@@ -17,6 +17,7 @@ $(function() {
 
     if (OM.emptyWorld) {
       OM.Galaxy.init()
+      $('#container').hide();
       $('#container').on('click', 'canvas', function(event) {
         $('#return').show();
         toggleView(event.target.dataset.source);

@@ -46,6 +46,7 @@ OM.Galaxy = new function() {
 
 
 
+
     scene = new THREE.Scene();
 
 
@@ -109,7 +110,6 @@ OM.Galaxy = new function() {
     controls = new THREE.TrackballControls(camera, renderer.domElement);
     controls.rotateSpeed = 0.1;
     controls.dynamicDampingFactor = 0.2;
-    controls.noRoll = true;
 
 
     window.addEventListener('resize', onWindowResize, false);
@@ -227,8 +227,6 @@ OM.Galaxy = new function() {
 
   }
 
-
-
   this.addPhotos = function(photos) {
     if (photos.length === 0) {
       return;
@@ -247,7 +245,7 @@ OM.Galaxy = new function() {
 
   }
 
-  function animate() {
+   function animate() {
     time = Date.now();
 
 
@@ -262,6 +260,8 @@ OM.Galaxy = new function() {
       object.scale.set(scale, scale, scale);
 
     }
+
+
 
     renderer.render(scene, camera);
   }
