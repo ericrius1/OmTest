@@ -5,6 +5,7 @@ body{
 .btn {
     background: #00d0ff;
     color: #ffffff;
+    border-width: 1px;
     border-radius: 0;
     font-size: 1em;
     letter-spacing: 0.25em;
