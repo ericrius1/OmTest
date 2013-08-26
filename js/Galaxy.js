@@ -21,7 +21,7 @@ OM.Galaxy = new function() {
   var pulsingSpeed = 0.002
   var newPhotoDuration = 2000;
   var startingDuration = 500;
-  var centeringDuration = 1500;
+  var centeringDuration = 500;
   var prevPhotoIndex;
   var time;
   var pulseStrength = 0.001;
@@ -198,8 +198,8 @@ OM.Galaxy = new function() {
         x: -14,
         y: 40,
         z: -296
-      }, Math.random() * centeringDuration + centeringDuration)
-      .easing(TWEEN.Easing.Exponential.Out)
+      }, centeringDuration)
+      .easing(TWEEN.Easing.Linear.None)
       .onComplete(function() {
         $('#center').text("View the Whole");
         controls.invertPitch = true;
@@ -215,8 +215,8 @@ OM.Galaxy = new function() {
         x: startCamPos.x,
         y: startCamPos.y,
         z: startCamPos.z
-      }, Math.random() * centeringDuration + centeringDuration)
-      .easing(TWEEN.Easing.Exponential.Out)
+      }, centeringDuration)
+      .easing(TWEEN.Easing.Linear.None)
       .onComplete(function() {
         $('#center').text("Find your center");
       })
