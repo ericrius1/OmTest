@@ -41,11 +41,13 @@ $(function() {
     if (flatMode) {
       $('#container').hide();
       $('.instagram').prepend('<img src="' + targetSource + '"/>');
+      $('#begin').hide();
     } else {
       window.scrollTo(0, 0);
       $('#return').hide();
       $('.instagram').empty();
       $('#container').show();
+      $('#begin').show();
     }
 
   }
