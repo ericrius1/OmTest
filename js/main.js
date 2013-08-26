@@ -85,7 +85,7 @@ $(function() {
     visActive = !visActive;
     if (visActive) {
       $('html,body', window.parent.document).animate({
-        scrollTop: '+=700px'
+        scrollTop: '+=500px'
       }, 'fast');
     } else {
       $('#container').hide();
