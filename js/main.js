@@ -84,9 +84,9 @@ $(function() {
   $('#begin').on('click', function() {
     visActive = !visActive;
     if (visActive) {
-      $('html,body', window.parent.document).animate({
-        scrollTop: '+=500px'
-      }, 'fast');
+      $('#container').show();
+      $('#begin').text("Exit");
+
     } else {
       $('#container').hide();
       $('#begin').text("Enter the Source");
