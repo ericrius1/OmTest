@@ -9,6 +9,7 @@ OM.centered = false;
 $(function() {
   var flatMode = false;
   var currentPhotoIndex;
+  var visActive = false;
   $('.instagram').on('didLoadInstagram', function(event, response) {
     response.data.map(function(photo) {
       OM.photos.push(photo.images.low_resolution.url);
@@ -78,6 +79,18 @@ $(function() {
       OM.Galaxy.leaveCenter();
     }
   });
+
+  $('#begin').on('click', function(){
+    visActive =!visActive;
+    if(visActive){
+      $('#container').show();
+      $('#begin').text("Exit");
+    }
+    else{
+      $('#container').hide();
+      $('#begin').text("Enter the Source");
+    }
+  })
 
 
 

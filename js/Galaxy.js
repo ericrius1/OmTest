@@ -46,7 +46,6 @@ OM.Galaxy = new function() {
 
 
 
-
     scene = new THREE.Scene();
 
 
@@ -228,26 +227,7 @@ OM.Galaxy = new function() {
 
   }
 
-  function animate() {
-    time = Date.now();
 
-
-    requestAnimationFrame(animate);
-
-    TWEEN.update();
-    controls.update();
-
-    for (var i = 0, len = objects.length; i < len; i++) {
-      var object = objects[i];
-      var scale = Math.sin((Math.floor(object.position.x) + time) * pulseSpeed) * 0.3 + 1;
-      object.scale.set(scale, scale, scale);
-
-    }
-
-
-
-    renderer.render(scene, camera);
-  }
 
   this.addPhotos = function(photos) {
     if (photos.length === 0) {
@@ -265,6 +245,25 @@ OM.Galaxy = new function() {
 
     });
 
+  }
+
+  function animate() {
+    time = Date.now();
+
+
+    requestAnimationFrame(animate);
+
+    TWEEN.update();
+    controls.update();
+
+    for (var i = 0, len = objects.length; i < len; i++) {
+      var object = objects[i];
+      var scale = Math.sin((Math.floor(object.position.x) + time) * pulseSpeed) * 0.3 + 1;
+      object.scale.set(scale, scale, scale);
+
+    }
+
+    renderer.render(scene, camera);
   }
 
 }
