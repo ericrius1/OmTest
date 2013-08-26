@@ -84,6 +84,7 @@ $(function() {
   $('#begin').on('click', function(){
     visActive =!visActive;
     if(visActive){
+      $(window.parent.document).scrollTop($(document).height());
       $('#container').show();
       $('#begin').text("Exit");
     }
