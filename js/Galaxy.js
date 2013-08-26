@@ -198,9 +198,9 @@ OM.Galaxy = new function() {
   this.findCenter = function() {
     new TWEEN.Tween(camera.position)
       .to({
-        x: 99.9999,
-        y: 0,
-        z: 0.12217
+        x: -14,
+        y: 40,
+        z: -296
       }, Math.random() * camDuration + camDuration)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onComplete(function() {
